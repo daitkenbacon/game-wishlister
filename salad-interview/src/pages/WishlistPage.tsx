@@ -24,7 +24,7 @@ export default function WishlistPage({}: WishlistPageProps) {
     const [loading, setLoading] = useState(true);
     const [rawgData, setRawgData] = useState<IRawgData>();
     const [error, setError] = useState('');
-    const [wishlist, setWishlist] = useState([]);
+    const [wishlist, setWishlist] = useState<Number[]>([]);
 
     var skeletonCards = [];
     for (var i = 0; i < 8; i++) {
@@ -46,6 +46,26 @@ export default function WishlistPage({}: WishlistPageProps) {
         loadData();
     }, []);
 
+    const removeWishlistItem = (id: number) => {
+        let filteredArray = wishlist.filter(item  => item!==id);
+        setWishlist(filteredArray);
+    }
+
+    const addWishlistItem = (id: number) => {
+        setWishlist([
+            ...wishlist,
+            id
+        ])
+    }
+
+    const handleWishlistClick = (id: number) => {
+        !wishlist.includes(id) &&
+            addWishlistItem(id);
+
+        wishlist.includes(id) && (
+            removeWishlistItem(id)
+        )
+    }
     
 
   return (
@@ -67,8 +87,11 @@ export default function WishlistPage({}: WishlistPageProps) {
             {!loading &&
                 rawgData?.results.map((game) => {
                     const {id, name, released, background_image} = game;
+                    const selected = false;
                     return (
-                        <WishlistCard variant='standard' key={id} name={name} released={released} background_image={background_image} />
+                        <div className='card-container' onClick={() => handleWishlistClick(id)}>
+                            <WishlistCard variant='standard' key={id} name={name} released={released} background_image={background_image} />
+                        </div>
                     )
                 })
             }

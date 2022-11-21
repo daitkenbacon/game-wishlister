@@ -21,11 +21,14 @@
 
     .counter-container{
         display: flex;
-        align-items: right;
-        text-align: right;
+        align-items: left;
+        text-align: left;
         flex-direction: column;
         margin: 25px;
+        width: 100px;
         font-family: 'Mallory-Light', sans-serif;
+        color: #0A2133;
+        font-size: 18px;
     }
 }
 

@@ -7,14 +7,14 @@ type WishlistCardProps = {
     variant: string;
 }
 
-export default function WishlistCard({ variant, name, released, background_image}: WishlistCardProps) {
+export default function WishlistCard(props: WishlistCardProps) {
     return (
         <div className={`card-container fadeIn`} >
-            <img src={background_image} alt={name} />
+            <img src={props.background_image} alt={props.name} />
             <div className="card-footer">
-                <p className='title'>{name}</p>
-                <p className='released'>{released}</p>
-                {variant==='skeleton' && <div className='loader'></div>}
+                <p className='title'>{props.name}</p>
+                <p className='released'>{props.released}</p>
+                {props.variant==='skeleton' && <div className='loader'></div>}
             </div>
         </div>
     )
