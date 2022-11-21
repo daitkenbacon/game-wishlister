@@ -1,0 +1,87 @@
+body {
+    margin: 0;
+    border: 0;
+}
+
+.card-container {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    flex: wrap;
+
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+
+    width: 280px;
+    
+    margin: 5px;
+    flex: none;
+    flex-grow: 0;
+    order: 2;
+    max-height: 480px;
+
+    &:hover{
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+    }
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+     opacity: 0;
+  }
+  100% {
+     opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+     opacity: 0;
+  }
+  100% {
+     opacity: 1;
+  }
+}
+
+.fadeIn {
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
+}
+
+.card-footer {
+    height: 100px;
+    width: 100%;
+    padding: 20px;
+    margin: 0;
+
+    flex-direction: column;
+    box-sizing: border-box;
+
+    background: linear-gradient(186.54deg, rgba(252, 252, 252, 0.06) -32.65%, rgba(252, 252, 252, 0.006) 33.12%, rgba(252, 252, 252, 0.06) 56.13%, rgba(252, 252, 252, 0.12) 99.63%);
+    box-shadow: 33.2917px 33.2917px 48.9583px rgba(0, 0, 0, 0.1), 15.6667px 7.83333px 71.4792px rgba(252, 252, 252, 0.05), inset -7.83333px -5.875px 78.3333px rgba(252, 252, 252, 0.05);
+    backdrop-filter: blur(17.1354px);
+
+    .title {
+        font-family: Mallory-Light;
+        font-size: 18px;
+        color: #0A2133;
+        margin: 0 0 6px 0;
+    }
+    .released {
+        font-family: Mallory-Light;
+        font-size: 16px;
+        color: #1F4F22;
+    }
+}
+
+img {
+    object-fit: cover;
+    width: 281.02px;
+    height: 376.46px;
+
+    filter: drop-shadow(11.6005px 19.3342px 29.0012px rgba(10, 33, 51, 0.45));
+}

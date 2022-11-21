@@ -1,2 +1,17 @@
 @charset 'utf-8';
 @import 'bulma';
+@font-face {
+    font-family: 'Mallory';
+    src: local('Mallory'), url(./fonts/Mallory/Mallory-Black.ttf) format('truetype');
+    font-family: 'Mallory-Light';
+    src: local('Mallory-Light'), url(./fonts/Mallory/Mallory-Compact-Light.ttf) format('truetype');
+  }
+
+body {
+  background-color: #53A626;
+  background: linear-gradient(124.34deg, #53A626 29.71%, #B2D530 88.74%);
+}
+
+App {
+  height: 100%;
+}
