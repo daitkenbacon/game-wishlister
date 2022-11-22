@@ -18,14 +18,21 @@ body {
     width: 280px;
     
     margin: 5px;
+    margin-bottom: 50px;
     flex: none;
     flex-grow: 0;
     order: 2;
     max-height: 480px;
 
     &:hover{
-        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        box-shadow: 0 8px 16px 0 #34434e;
         transition: 0.3s;
+    }
+
+    &.selected {
+        box-shadow: 0 8px 16px 0 #0A2133;
+        transition: 0.3s;
+        background-color: #0a21335d;
     }
 }
 
@@ -80,8 +87,8 @@ body {
 
 img {
     object-fit: cover;
-    width: 281.02px;
-    height: 376.46px;
+    width: 280px;
+    height: 375px;
 
     filter: drop-shadow(11.6005px 19.3342px 29.0012px rgba(10, 33, 51, 0.45));
 }

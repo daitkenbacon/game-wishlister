@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import './WishlistPage.scss'
 import axios from 'axios';
 import WishlistCard from '../components/wishlist-card/WishlistCard';
-
-type WishlistPageProps = {}
+import apiKey from '../salad-config.json';
 
 interface GameData {
     id: number;
@@ -12,39 +11,46 @@ interface GameData {
     background_image: string;
 }
 
-interface IRawgData {
-    count: number;
-    next: string;
-    previous: string;
-    results: GameData[];
-}
-
-
-export default function WishlistPage({}: WishlistPageProps) {
-    const [loading, setLoading] = useState(true);
-    const [rawgData, setRawgData] = useState<IRawgData>();
+const WishlistPage: React.FC<{}> = () => {
+    const [loading, setLoading] = useState<Boolean>(true);
+    const [gameCards, setGameCards] = useState<GameData[]>([]);
     const [error, setError] = useState('');
     const [wishlist, setWishlist] = useState<Number[]>([]);
+    const [isShowAll, setIsShowAll] = useState<Boolean>(true);
 
-    var skeletonCards = [];
+    const today = new Date();
+    const nextDate = new Date();
+    nextDate.setDate(nextDate.getDate() + 1);
+
+    const skeletonCards = [];
     for (var i = 0; i < 8; i++) {
-        skeletonCards.push(<WishlistCard released='' background_image={'./teamtrees.png'} name='' variant='skeleton' key={i}></WishlistCard>);
+        skeletonCards.push({id: i, name: '', released: '', background_image: './teamtrees.png'});
     }
 
     useEffect(() => {
         const loadData = () => {
-            axios({ method: 'GET', url: 'https://api.rawg.io/api/games?key=604d652296334e40942eba5c034620d3&dates=2022-04-28,2023-04-27' })
+            axios({ method: 'GET', url: `https://api.rawg.io/api/games?key=${apiKey['key']}&dates=${
+                today.getFullYear()}-${today.getMonth()+1}-${today.getDate()},${nextDate.getFullYear()+1}-${nextDate.getMonth()+1}-${nextDate.getDate()}`})
                 .then((res) => {
                     setError('');
-                    setRawgData(res.data);
+                    setGameCards(res.data.results);
                 })
                 .catch((err) => {
                     setError(err.message);
                 })
-                .finally(() => setLoading(false));
+                .finally(() => {
+                    setGameCards((oldState) => oldState.sort((a,b) => {
+                        const aDate = parseInt(a.released.split('-').join(''),10);
+                        const bDate = parseInt(b.released.split('-').join(''),10);
+                        return (
+                            aDate - bDate
+                        )
+                    }))
+                    setLoading(false)
+                });
         };
         loadData();
-    }, []);
+    });
 
     const removeWishlistItem = (id: number) => {
         let filteredArray = wishlist.filter(item  => item!==id);
@@ -66,17 +72,25 @@ export default function WishlistPage({}: WishlistPageProps) {
             removeWishlistItem(id)
         )
     }
+
+    const handleShowAllToggle = () => {
+        setIsShowAll(!isShowAll);
+    }
     
 
   return (
     <div className='page-container'>
         <div className='wishlist-header'>
             <h1>
-                Wishlist Page
+                Wishlist Maker
             </h1>
             <div className='counter-container'>
                 <h4>Items: {wishlist.length}</h4>
-
+                <label className='checkbox-container' onChange={handleShowAllToggle}>
+                    <input type="checkbox" defaultChecked/>
+                    <span className='checkmark'></span>
+                    Show All
+                </label>
             </div>
         </div>
 
@@ -84,21 +98,45 @@ export default function WishlistPage({}: WishlistPageProps) {
             <p>{error}</p>
         }
         <div className='wishlist-cards-container'>
-            {!loading &&
-                rawgData?.results.map((game) => {
+            {(!loading && isShowAll) &&
+                gameCards?.map((game) => {
                     const {id, name, released, background_image} = game;
-                    const selected = false;
                     return (
-                        <div className='card-container' onClick={() => handleWishlistClick(id)}>
-                            <WishlistCard variant='standard' key={id} name={name} released={released} background_image={background_image} />
+                        <div key={id} className='cards-container' onClick={() => handleWishlistClick(id)}>
+                            <WishlistCard variant='standard' selected={wishlist.find(item => item===id) ? true : false} id={id} name={name} released={released} background_image={background_image} />
                         </div>
                     )
                 })
             }
+            {(!loading && !isShowAll) &&
+                gameCards?.map((game) => {
+                    const {id, name, released, background_image} = game;
+                    if(wishlist && wishlist.find(item => item===id)){
+                        return (
+                            <div key={id} className='cards-container' onClick={() => handleWishlistClick(id)}>
+                                <WishlistCard variant='standard' selected={wishlist.find(item => item===id) ? true : false} id={id} name={name} released={released} background_image={background_image} />
+                            </div>
+                        )
+                    } 
+                    return null;
+                })
+            }
+            {(!isShowAll && wishlist.length===0) &&
+                <h1>No wishlisted items!</h1>
+            }
             {loading &&
-                skeletonCards
+                skeletonCards.map((game) => {
+                    const {id, name, released, background_image} = game;
+                    return (
+                        <div key={id} className='cards-container'>
+                            <WishlistCard variant='skeleton' selected={false} id={id} name={name} released={released} background_image={background_image} /> 
+                        </div>
+                    )
+                })
             }
         </div>
     </div>
   )
 }
+
+export default WishlistPage;

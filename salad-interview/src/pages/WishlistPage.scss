@@ -1,3 +1,11 @@
+.page-container {
+    display: flex;
+    flex-direction: column;
+    flex: wrap;
+    margin: 25px;
+    margin: 0 50px 50px 50px;
+    height: 100%;
+}
 
 .wishlist-header {
     display: flex;
@@ -29,17 +37,20 @@
         font-family: 'Mallory-Light', sans-serif;
         color: #0A2133;
         font-size: 18px;
+
+        .checkbox-container {
+            margin-top: 5px;
+            font-size: 14px;
+            input {
+                margin-right: 5px;
+                accent-color: #0A2133;
+            }
+
+        }
+
     }
 }
 
-.page-container {
-    display: flex;
-    flex-direction: column;
-    flex: wrap;
-    margin: 25px;
-    height: 100%;
-    margin: 0 50px 50px 50px;
-}
 
 .wishlist-cards-container {
     display: grid;
@@ -68,14 +79,6 @@
 @media (min-width: 1200px) {
     .wishlist-cards-container { grid-template-columns: repeat(4, 1fr); }
     .wishlist-header {flex-direction: row; flex: wrap;}
-}
-
-.loader-container {
-    background: transparent;
-    height: 100vh;
-    width: 100%;
-    margin: auto;
-
 }
 
 .loader {
