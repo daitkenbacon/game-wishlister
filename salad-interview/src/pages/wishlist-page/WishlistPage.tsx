@@ -1,17 +1,21 @@
 import { useEffect, useState } from "react";
-import "./WishlistPage.scss";
 import axios from "axios";
-import WishlistCard from "../../components/wishlist-card/WishlistCard";
 import apiKey from "../../salad-config.json";
-import Header from '../../components/header/Header';
 
-interface GameData {
+import "./WishlistPage.scss";
+
+import Header from "../../components/header/Header";
+
+import SkeletonCards from '../../components/skeleton-cards/SkeletonCards';
+import FilteredCardsList from "../../components/filtered-cards-list/FilteredCardsList";
+import WishlistCardsList from '../../components/wishlist-cards-list/WishlistCardsList';
+
+export interface GameData {
   id: number;
   name: string;
   released: string;
   background_image: string;
 }
-
 
 const WishlistPage: React.FC<{}> = () => {
   const [loading, setLoading] = useState<Boolean>(true);
@@ -24,19 +28,10 @@ const WishlistPage: React.FC<{}> = () => {
   const nextDate = new Date();
   nextDate.setDate(nextDate.getDate() + 1);
 
-  const skeletonCards = [];
-  for (var i = 0; i < 8; i++) {
-    skeletonCards.push({
-      id: i,
-      name: "",
-      released: "",
-      background_image: "./teamtrees.png",
-    });
-  }
-
   useEffect(() => {
     const loadData = () => {
       axios({
+        //Fetches games releasing between current day and one year + one day from now
         method: "GET",
         url: `https://api.rawg.io/api/games?key=${
           apiKey["key"]
@@ -54,6 +49,7 @@ const WishlistPage: React.FC<{}> = () => {
           setError(err.message);
         })
         .finally(() => {
+          //After data fetches, sort games by release date
           setGameCards((oldState) =>
             oldState.sort((a, b) => {
               const aDate = parseInt(a.released.split("-").join(""), 10);
@@ -77,8 +73,9 @@ const WishlistPage: React.FC<{}> = () => {
   };
 
   const handleWishlistClick = (id: number) => {
-    !wishlist.includes(id) && addWishlistItem(id);
+    //If game already wishlisted, remove; if not, add
 
+    !wishlist.includes(id) && addWishlistItem(id);
     wishlist.includes(id) && removeWishlistItem(id);
   };
 
@@ -88,74 +85,30 @@ const WishlistPage: React.FC<{}> = () => {
 
   return (
     <div className="page-container">
-      <Header handleShowAllToggle={handleShowAllToggle} wishlist_length={wishlist.length}/>
+      <Header
+        handleShowAllToggle={handleShowAllToggle}
+        wishlist_length={wishlist.length}
+      />
 
       {error && <p>{error}</p>}
       <div className="wishlist-cards-container">
-        {!loading &&
+        {//Render full list of games only if page loaded and "show all" is checked
+          !loading &&
           isShowAll &&
-          gameCards?.map((game) => {
-            const { id, name, released, background_image } = game;
-            return (
-              <div
-                key={id}
-                className="cards-container"
-                onClick={() => handleWishlistClick(id)}
-              >
-                <WishlistCard
-                  variant="standard"
-                  selected={wishlist.find((item) => item === id) ? true : false}
-                  id={id}
-                  name={name}
-                  released={released}
-                  background_image={background_image}
-                />
-              </div>
-            );
-          })}
-        {!loading &&
+          <WishlistCardsList handleWishlistClick={handleWishlistClick} gameCards={gameCards} wishlist={wishlist}/>
+        }
+        {//Render filtered list only if page loaded and "show all" is unchecked
+          !loading &&
           !isShowAll &&
-          gameCards?.map((game) => {
-            const { id, name, released, background_image } = game;
-            if (wishlist && wishlist.find((item) => item === id)) {
-              return (
-                <div
-                  key={id}
-                  className="cards-container"
-                  onClick={() => handleWishlistClick(id)}
-                >
-                  <WishlistCard
-                    variant="standard"
-                    selected={
-                      wishlist.find((item) => item === id) ? true : false
-                    }
-                    id={id}
-                    name={name}
-                    released={released}
-                    background_image={background_image}
-                  />
-                </div>
-              );
-            }
-            return null;
-          })}
-        {!isShowAll && wishlist.length === 0 && <h1>No wishlisted items!</h1>}
-        {loading &&
-          skeletonCards.map((game) => {
-            const { id, name, released, background_image } = game;
-            return (
-              <div key={id} className="cards-container">
-                <WishlistCard
-                  variant="skeleton"
-                  selected={false}
-                  id={id}
-                  name={name}
-                  released={released}
-                  background_image={background_image}
-                />
-              </div>
-            );
-          })}
+          <FilteredCardsList handleWishlistClick={handleWishlistClick} gameCards={gameCards} wishlist={wishlist}  />
+          }
+        {//If no wishlisted items and "show all" unchecked, show message
+        !isShowAll && wishlist.length === 0 && <h1>No wishlisted items!</h1>
+        }
+        {//If page is loading, render skeleton cards
+          loading &&
+          <SkeletonCards />
+        }
       </div>
     </div>
   );
