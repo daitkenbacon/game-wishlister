@@ -3,6 +3,7 @@ import "./WishlistPage.scss";
 import axios from "axios";
 import WishlistCard from "../../components/wishlist-card/WishlistCard";
 import apiKey from "../../salad-config.json";
+import Header from '../../components/header/Header';
 
 interface GameData {
   id: number;
@@ -10,6 +11,7 @@ interface GameData {
   released: string;
   background_image: string;
 }
+
 
 const WishlistPage: React.FC<{}> = () => {
   const [loading, setLoading] = useState<Boolean>(true);
@@ -86,17 +88,7 @@ const WishlistPage: React.FC<{}> = () => {
 
   return (
     <div className="page-container">
-      <div className="wishlist-header">
-        <h1>Wishlist Maker</h1>
-        <div className="counter-container">
-          <h4>Items: {wishlist.length}</h4>
-          <label className="checkbox-container" onChange={handleShowAllToggle}>
-            <input type="checkbox" defaultChecked />
-            <span className="checkmark"></span>
-            Show All
-          </label>
-        </div>
-      </div>
+      <Header handleShowAllToggle={handleShowAllToggle} wishlist_length={wishlist.length}/>
 
       {error && <p>{error}</p>}
       <div className="wishlist-cards-container">
