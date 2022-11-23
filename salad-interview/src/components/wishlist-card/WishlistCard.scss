@@ -15,6 +15,8 @@ body {
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
 
+  transition: .1s;
+
   width: 280px;
 
   margin: 5px;
@@ -26,12 +28,12 @@ body {
 
   &:hover {
     box-shadow: 0 8px 16px 0 #34434e;
-    transition: 0.3s;
+    transition: 0.1s;
   }
 
   &.selected {
     box-shadow: 0 8px 16px 0 #0a2133;
-    transition: 0.3s;
+    transition: 0.1s;
     background-color: #0a21335d;
   }
 }

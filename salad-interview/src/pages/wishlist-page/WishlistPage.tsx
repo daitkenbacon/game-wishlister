@@ -6,9 +6,9 @@ import "./WishlistPage.scss";
 
 import Header from "../../components/header/Header";
 
-import SkeletonCards from '../../components/skeleton-cards/SkeletonCards';
+import SkeletonCards from "../../components/skeleton-cards/SkeletonCards";
 import FilteredCardsList from "../../components/filtered-cards-list/FilteredCardsList";
-import WishlistCardsList from '../../components/wishlist-cards-list/WishlistCardsList';
+import WishlistCardsList from "../../components/wishlist-cards-list/WishlistCardsList";
 
 export interface GameData {
   id: number;
@@ -92,22 +92,33 @@ const WishlistPage: React.FC<{}> = () => {
 
       {error && <p>{error}</p>}
       <div className="wishlist-cards-container">
-        {//Render full list of games only if page loaded and "show all" is checked
-          !loading &&
-          isShowAll &&
-          <WishlistCardsList handleWishlistClick={handleWishlistClick} gameCards={gameCards} wishlist={wishlist}/>
+        {
+          //Render full list of games only if page loaded and "show all" is checked
+          !loading && isShowAll && (
+            <WishlistCardsList
+              handleWishlistClick={handleWishlistClick}
+              gameCards={gameCards}
+              wishlist={wishlist}
+            />
+          )
         }
-        {//Render filtered list only if page loaded and "show all" is unchecked
-          !loading &&
-          !isShowAll &&
-          <FilteredCardsList handleWishlistClick={handleWishlistClick} gameCards={gameCards} wishlist={wishlist}  />
-          }
-        {//If no wishlisted items and "show all" unchecked, show message
-        !isShowAll && wishlist.length === 0 && <h1>No wishlisted items!</h1>
+        {
+          //Render filtered list only if page loaded and "show all" is unchecked
+          !loading && !isShowAll && (
+            <FilteredCardsList
+              handleWishlistClick={handleWishlistClick}
+              gameCards={gameCards}
+              wishlist={wishlist}
+            />
+          )
         }
-        {//If page is loading, render skeleton cards
-          loading &&
-          <SkeletonCards />
+        {
+          //If no wishlisted items and "show all" unchecked, show message
+          !isShowAll && wishlist.length === 0 && <h1>No wishlisted items!</h1>
+        }
+        {
+          //If page is loading, render skeleton cards
+          loading && <SkeletonCards />
         }
       </div>
     </div>

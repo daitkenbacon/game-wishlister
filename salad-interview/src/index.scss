@@ -9,7 +9,29 @@
     url(./fonts/Mallory/Mallory-Compact-Light.ttf) format("truetype");
 }
 
-html {
+body {
   min-height: 100%;
   background: linear-gradient(124.34deg, #53a626 29.71%, #b2d530 88.74%);
+  background-repeat: repeat;
+  position: relative;
+  overflow:hidden;
+  z-index:0;
+
+  &:before{
+    content: "";
+    position:absolute;
+    z-index:-1;
+    top:0;
+    left:0;
+    right:-100%;
+    bottom:0;
+    background:inherit;
+    animation: animatedBackground 50s linear infinite;
+  }
+}
+
+@keyframes animatedBackground {
+  to {
+    transform:translateX(-50%);
+  }
 }
