@@ -6,7 +6,7 @@ import "./WishlistPage.scss";
 
 import Header from "../../components/header/Header";
 
-import SkeletonCards from "../../components/skeleton-cards/SkeletonCards";
+import SkeletonCards from "../../components/skeleton-cards-list/SkeletonCardsList";
 import FilteredCardsList from "../../components/filtered-cards-list/FilteredCardsList";
 import WishlistCardsList from "../../components/wishlist-cards-list/WishlistCardsList";
 
