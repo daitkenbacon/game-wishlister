@@ -1,8 +1,8 @@
-import "./WishlistCard.scss";
+import "../wishlist-card/WishlistCard.scss";
 
 import { motion } from "framer-motion";
 
-type WishlistCardProps = {
+type SkeletonCardProps = {
   name: string;
   released: string;
   background_image: string;
@@ -11,19 +11,11 @@ type WishlistCardProps = {
   selected: boolean;
 };
 
-export default function WishlistCard(props: WishlistCardProps) {
+export default function SkeletonCard(props: SkeletonCardProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 25 }}
-      whileInView={{ opacity: 1, y: 0 }}
-    >
-      <div
-        key={props.id}
-        className={`card-container 
-              ${props.selected ? "selected" : ""}
-              `}
-      >
-        <img src={props.background_image} alt={props.name} />
+    <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}>
+      <div key={props.id} className={`card-container`}>
+        <img src={props.background_image} alt={""} />
         <div className="card-footer">
           <p className="title">{props.name}</p>
           <p className="released">{props.released}</p>

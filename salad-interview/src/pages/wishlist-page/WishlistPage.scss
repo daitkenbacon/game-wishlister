@@ -11,7 +11,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: left;
+  align-items: center;
   margin: 20px 0 50px 0;
 
   h1 {
@@ -23,7 +23,7 @@
 
     flex: none;
     order: 0;
-    align-self: stretch;
+    align-self: center;
     flex-grow: 0;
   }
 
@@ -41,9 +41,20 @@
     .checkbox-container {
       margin-top: 5px;
       font-size: 14px;
+
+      &:hover {
+        text-shadow: 1px 1px 4px #0a2133;
+        transition: 0.2s;
+      }
+
       input {
         margin-right: 5px;
         accent-color: #0a2133;
+
+        &:hover {
+          accent-color: #3473a3;
+          transition: 0.2s;
+        }
       }
     }
   }
@@ -62,7 +73,29 @@
   }
 }
 
+@media (max-width: 600px) {
+  // Mobile styles <600px
+  .page-container {
+    margin: 0;
+  }
+  .wishlist-header {
+    width: 60vh;
+    margin: 0;
+    align-items: stretch;
+    .counter-container {
+      margin-left: 0;
+      padding: 0;
+      justify-self: left;
+      align-self: left;
+    }
+    h1 {
+      margin-left: 0;
+    }
+  }
+}
+
 @media (min-width: 600px) {
+  //Mobile styles 600-900px
   .wishlist-cards-container {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -72,6 +105,7 @@
 }
 
 @media (min-width: 900px) {
+  //Tablet styles 900-1200px
   .wishlist-cards-container {
     grid-template-columns: repeat(3, 1fr);
   }

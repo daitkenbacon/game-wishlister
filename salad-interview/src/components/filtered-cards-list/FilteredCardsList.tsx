@@ -15,6 +15,7 @@ const FilteredCardsList: React.FC<FilteredCardsListProps> = (
       {props.gameCards?.map((game) => {
         const { id, name, released, background_image } = game;
         if (props.wishlist && props.wishlist.find((item) => item === id)) {
+          //renders WishlistCard items that are also found in wishlist array
           return (
             <div
               key={id}
@@ -34,6 +35,7 @@ const FilteredCardsList: React.FC<FilteredCardsListProps> = (
             </div>
           );
         }
+        //If wishlist is empty
         return null;
       })}
     </>

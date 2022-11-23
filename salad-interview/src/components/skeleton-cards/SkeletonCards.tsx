@@ -1,4 +1,4 @@
-import WishlistCard from "../wishlist-card/WishlistCard";
+import SkeletonCard from "../skeleton-card/SkeletonCard";
 
 const SkeletonCards: React.FC<{}> = () => {
   const skeletonCards = [];
@@ -17,7 +17,7 @@ const SkeletonCards: React.FC<{}> = () => {
         const { id, name, released, background_image } = game;
         return (
           <div key={id} className="cards-container">
-            <WishlistCard
+            <SkeletonCard
               variant="skeleton"
               selected={false}
               id={id}

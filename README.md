@@ -1,5 +1,6 @@
 # salad-wishlister
     A video game wishlist-maker utilizing the RAWG API.
+        -Uses Typescript, React, Framer, and Axios
 
 # How to run
     Visit https://rawg.io/apidocs to get RAWG's API key.
