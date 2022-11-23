@@ -1,6 +1,6 @@
-import type { FunctionComponent } from 'react';
+import type { FunctionComponent } from "react";
 
-import WishlistPage from './pages/WishlistPage';
+import WishlistPage from "./pages/wishlist-page/WishlistPage";
 
 export interface AppProps {}
 
