@@ -17,11 +17,11 @@ export default function WishlistCard(props: WishlistCardProps) {
       initial={{ opacity: 0, y: 25 }}
       whileInView={{ opacity: 1, y: 0 }}
       whileHover={{
-        rotate: 1,
+        scale: 1.01,
         transition: { duration: 0.2 },
       }}
       whileTap={{
-        scale: 1.01,
+        scale: 0.99,
         transition: { duration: 0.1 },
       }}
     >
