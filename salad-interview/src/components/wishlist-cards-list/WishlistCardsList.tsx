@@ -1,15 +1,15 @@
 import WishlistCard from "../wishlist-card/WishlistCard";
 import { GameData } from "../../pages/wishlist-page/WishlistPage";
 
-interface FilteredCardsListProps {
+interface WishlistCardListProps {
   gameCards: GameData[];
   wishlist: Number[];
   handleWishlistClick: (id: number) => void;
   handleWishlistKeydown: (event: React.KeyboardEvent ,id: number) => void;
 }
 
-const FilteredCardsList: React.FC<FilteredCardsListProps> = (
-  props: FilteredCardsListProps
+const WishlistCardList: React.FC<WishlistCardListProps> = (
+  props: WishlistCardListProps
 ) => {
   return (
     <>
@@ -39,4 +39,4 @@ const FilteredCardsList: React.FC<FilteredCardsListProps> = (
   );
 };
 
-export default FilteredCardsList;
+export default WishlistCardList;
