@@ -6,7 +6,6 @@ type WishlistCardProps = {
   name: string;
   released: string;
   background_image: string;
-  variant: string;
   id: number;
   selected: boolean;
 };
@@ -35,7 +34,6 @@ export default function WishlistCard(props: WishlistCardProps) {
         <div className="card-footer">
           <p className="title">{props.name}</p>
           <p className="released">{props.released}</p>
-          {props.variant === "skeleton" && <div className="loader"></div>}
         </div>
       </div>
     </motion.div>

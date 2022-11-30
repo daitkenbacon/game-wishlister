@@ -18,7 +18,6 @@ const SkeletonCards: React.FC<{}> = () => {
         return (
           <div key={id} className="cards-container">
             <SkeletonCard
-              variant="skeleton"
               selected={false}
               id={id}
               name={name}

@@ -5,7 +5,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
   return (
-    <div className="wishlist-header">
+    <header className="wishlist-header">
       <h1>Wishlist Maker</h1>
       <div className="counter-container">
         <h4>Items: {props.wishlist_length}</h4>
@@ -18,7 +18,7 @@ const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
           Show All
         </label>
       </div>
-    </div>
+    </header>
   );
 };
 

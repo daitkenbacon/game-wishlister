@@ -5,6 +5,7 @@ interface FilteredCardsListProps {
   gameCards: GameData[];
   wishlist: Number[];
   handleWishlistClick: (id: number) => void;
+  handleWishlistKeydown: (event: React.KeyboardEvent ,id: number) => void;
 }
 
 const FilteredCardsList: React.FC<FilteredCardsListProps> = (
@@ -15,15 +16,16 @@ const FilteredCardsList: React.FC<FilteredCardsListProps> = (
       {props.gameCards?.map((game) => {
         const { id, name, released, background_image } = game;
         if (props.wishlist && props.wishlist.find((item) => item === id)) {
-          //renders WishlistCard items that are also found in wishlist array
+          // Renders WishlistCard items that are also found in wishlist array
           return (
             <div
               key={id}
               className="cards-container"
               onClick={() => props.handleWishlistClick(id)}
+              onKeyDown={(e) => props.handleWishlistKeydown(e, id)}
+              tabIndex={0}
             >
               <WishlistCard
-                variant="standard"
                 selected={
                   props.wishlist.find((item) => item === id) ? true : false
                 }
@@ -35,7 +37,7 @@ const FilteredCardsList: React.FC<FilteredCardsListProps> = (
             </div>
           );
         }
-        //If wishlist is empty
+        // If wishlist is empty
         return null;
       })}
     </>

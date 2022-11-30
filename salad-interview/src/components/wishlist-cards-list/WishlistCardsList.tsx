@@ -5,6 +5,7 @@ interface FilteredCardsListProps {
   gameCards: GameData[];
   wishlist: Number[];
   handleWishlistClick: (id: number) => void;
+  handleWishlistKeydown: (event: React.KeyboardEvent ,id: number) => void;
 }
 
 const FilteredCardsList: React.FC<FilteredCardsListProps> = (
@@ -19,9 +20,10 @@ const FilteredCardsList: React.FC<FilteredCardsListProps> = (
             key={id}
             className="cards-container"
             onClick={() => props.handleWishlistClick(id)}
+            onKeyDown={(e) => props.handleWishlistKeydown(e, id)}
+            tabIndex={0}
           >
             <WishlistCard
-              variant="standard"
               selected={
                 props.wishlist.find((item) => item === id) ? true : false
               }

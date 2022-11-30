@@ -6,7 +6,6 @@ type SkeletonCardProps = {
   name: string;
   released: string;
   background_image: string;
-  variant: string;
   id: number;
   selected: boolean;
 };
@@ -19,7 +18,7 @@ export default function SkeletonCard(props: SkeletonCardProps) {
         <div className="card-footer">
           <p className="title">{props.name}</p>
           <p className="released">{props.released}</p>
-          {props.variant === "skeleton" && <div className="loader"></div>}
+          <div className="loader"></div>
         </div>
       </div>
     </motion.div>

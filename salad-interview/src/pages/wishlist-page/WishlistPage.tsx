@@ -47,6 +47,7 @@ const WishlistPage: React.FC<{}> = () => {
         })
         .catch((err) => {
           setError(err.message);
+          console.log(error);
         })
         .finally(() => {
           //After data fetches, sort games by release date
@@ -79,6 +80,12 @@ const WishlistPage: React.FC<{}> = () => {
     wishlist.includes(id) && removeWishlistItem(id);
   };
 
+  const handleWishlistKeydown = (event: React.KeyboardEvent, id: number) => {
+    if(event.key === 'Enter' || event.key === ' ') {
+      handleWishlistClick(id);
+    }
+  }
+
   const handleShowAllToggle = () => {
     setIsShowAll(!isShowAll);
   };
@@ -93,9 +100,10 @@ const WishlistPage: React.FC<{}> = () => {
       {error && <p>{error}</p>}
       <div className="wishlist-cards-container">
         {
-          //Render full list of games only if page loaded and "show all" is checked
+          // Render full list of games only if page loaded and "show all" is checked
           !loading && isShowAll && (
             <WishlistCardsList
+              handleWishlistKeydown={handleWishlistKeydown}
               handleWishlistClick={handleWishlistClick}
               gameCards={gameCards}
               wishlist={wishlist}
@@ -103,9 +111,10 @@ const WishlistPage: React.FC<{}> = () => {
           )
         }
         {
-          //Render filtered list only if page loaded and "show all" is unchecked
+          // Render filtered list only if page loaded and "show all" is unchecked
           !loading && !isShowAll && (
             <FilteredCardsList
+              handleWishlistKeydown={handleWishlistKeydown}
               handleWishlistClick={handleWishlistClick}
               gameCards={gameCards}
               wishlist={wishlist}
@@ -113,11 +122,11 @@ const WishlistPage: React.FC<{}> = () => {
           )
         }
         {
-          //If no wishlisted items and "show all" unchecked, show message
+          // If no wishlisted items and "show all" unchecked, show message
           !isShowAll && wishlist.length === 0 && <h1>No wishlisted items!</h1>
         }
         {
-          //If page is loading, render skeleton cards
+          // If page is loading, render skeleton cards
           loading && <SkeletonCards />
         }
       </div>
