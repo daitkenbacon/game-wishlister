@@ -28,6 +28,16 @@ const WishlistPage: React.FC<{}> = () => {
   const nextDate = new Date();
   nextDate.setDate(nextDate.getDate() + 1);
 
+  var leadingZero = '';
+  var nextLeadingZero = '';
+
+  if(today.getDate() < 10){
+      leadingZero = '0';
+    }
+    if (Number(nextDate.getDate()) < 10){
+      nextLeadingZero = '0';
+    }
+
   useEffect(() => {
     const loadData = () => {
       axios({
@@ -36,10 +46,10 @@ const WishlistPage: React.FC<{}> = () => {
         url: `https://api.rawg.io/api/games?key=${
           apiKey["key"]
         }&dates=${today.getFullYear()}-${
-          today.getMonth() + 1
-        }-${today.getDate()},${nextDate.getFullYear() + 1}-${
-          nextDate.getMonth() + 1
-        }-${nextDate.getDate()}`,
+          today.getUTCMonth() + 1
+        }-${leadingZero}${today.getUTCDate()},${nextDate.getFullYear() + 1}-${
+          nextDate.getUTCMonth() + 1
+        }-${nextLeadingZero}${nextDate.getUTCDate()}`,
       })
         .then((res) => {
           setError("");
