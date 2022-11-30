@@ -1,5 +1,5 @@
 # salad-wishlister
-    A video game wishlist-maker utilizing the RAWG API.
+A video game wishlist-maker utilizing the RAWG API.
 
 ## local dependencies
 ### API key for data fetching
@@ -13,11 +13,11 @@
 3. This starts the app in development mode. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ### Frameworks used
-**Axios** for API requests
-**Framer** for motion animation
+- **Axios** for API requests,
+- **Framer** for motion animation
 
-## useage
-Games with release dates between the current day and one year from now will be displayed.
-Click on a game to add it to your wishlist.
-Click it again to remove it from your wishlist.
-Uncheck the "show all" checkbox to display only games on your wishlist.
+## Useage
+- Games with release dates between the current day and one year from now will be displayed.
+- Click on a game to add it to your wishlist.
+- Click it again to remove it from your wishlist.
+- Uncheck the "show all" checkbox to display only games on your wishlist.
