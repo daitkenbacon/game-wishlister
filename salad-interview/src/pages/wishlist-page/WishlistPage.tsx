@@ -30,6 +30,7 @@ const WishlistPage: React.FC<{}> = () => {
   var leadingZero = '';
   var nextLeadingZero = '';
 
+  // getDate & getDay return single digit days without a leading zero. These if-statements check and add them if necessary.
   if(today.getDate() < 10){
     leadingZero = '0';
   }
@@ -66,11 +67,6 @@ const WishlistPage: React.FC<{}> = () => {
               return aDate - bDate;
             })
           );
-          console.log(`${today.getFullYear()}-${
-          today.getUTCMonth() + 1
-        }-${today.getUTCDate()},${nextDate.getFullYear() + 1}-${
-          nextDate.getUTCMonth() + 1
-        }-${nextLeadingZero}${nextDate.getUTCDate()}`);
           setLoading(false);
         });
     };
