@@ -1,5 +1,5 @@
 # salad-wishlister
-A video game wishlist-maker utilizing the RAWG API.
+A video game wishlist-maker utilizing the RAWG API. Made with React.
 
 ## local dependencies
 ### API key for data fetching
