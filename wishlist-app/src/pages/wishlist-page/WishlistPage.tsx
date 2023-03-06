@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import apiKey from "../../salad-config.json";
+import apiKey from "../../wishlist-config.json";
 
 import "./WishlistPage.scss";
 
@@ -26,30 +26,29 @@ const WishlistPage: React.FC<{}> = () => {
 
   const today = new Date();
   const nextDate = new Date();
-  nextDate.setDate(nextDate.getDate() + 1);
-  var leadingZero = '';
-  var nextLeadingZero = '';
-
-  // getDate & getDay return single digit days without a leading zero. These if-statements check and add them if necessary.
-  if(today.getDate() < 10){
-    leadingZero = '0';
-  }
-  if (Number(nextDate.getDate()) < 10){
-    nextLeadingZero = '0';
-  }
 
   useEffect(() => {
+    var dateString: String;
+    var nextDateString: String;
+
+    nextDateString = (today.getFullYear() + 1) + '-'
+    + ('0' + (today.getMonth()+1)).slice(-2) + '-'
+    + ('0' + (today.getDate() + 1)).slice(-2);
+    
+    dateString = nextDate.getFullYear() + '-'
+    + ('0' + (nextDate.getMonth()+1)).slice(-2) + '-'
+    + ('0' + nextDate.getDate()).slice(-2);
+
+    console.log(`https://api.rawg.io/api/games?key=${
+          apiKey["key"]
+        }&dates=${dateString},${nextDateString}`)
     const loadData = () => {
       axios({
         //Fetches games releasing between current day and one year + one day from now
         method: "GET",
         url: `https://api.rawg.io/api/games?key=${
           apiKey["key"]
-        }&dates=${today.getFullYear()}-${
-          today.getUTCMonth() + 1
-        }-${leadingZero}${today.getUTCDate()},${nextDate.getFullYear() + 1}-${
-          nextDate.getUTCMonth() + 1
-        }-${nextLeadingZero}${nextDate.getUTCDate()}`,
+        }&dates=${dateString},${nextDateString}`,
       })
         .then((res) => {
           setError("");
@@ -57,6 +56,7 @@ const WishlistPage: React.FC<{}> = () => {
         })
         .catch((err) => {
           setError(err.message);
+          console.log(error);
         })
         .finally(() => {
           //After data fetches, sort games by release date
@@ -71,7 +71,7 @@ const WishlistPage: React.FC<{}> = () => {
         });
     };
     loadData();
-  }, []);
+  }, [0]);
 
   const removeWishlistItem = (id: number) => {
     let filteredArray = wishlist.filter((item) => item !== id);
@@ -103,7 +103,7 @@ const WishlistPage: React.FC<{}> = () => {
       {error && <p>{error}</p>}
       <div className="wishlist-cards-container">
         {
-          //Render full list of games only if page loaded and "show all" is checked
+          // Render full list of games only if page loaded and "show all" is checked
           !loading && isShowAll && (
             <WishlistCardsList
               handleWishlistClick={handleWishlistClick}
@@ -113,7 +113,7 @@ const WishlistPage: React.FC<{}> = () => {
           )
         }
         {
-          //Render filtered list only if page loaded and "show all" is unchecked
+          // Render filtered list only if page loaded and "show all" is unchecked
           !loading && !isShowAll && (
             <FilteredCardsList
               handleWishlistClick={handleWishlistClick}
@@ -123,11 +123,11 @@ const WishlistPage: React.FC<{}> = () => {
           )
         }
         {
-          //If no wishlisted items and "show all" unchecked, show message
+          // If no wishlisted items and "show all" unchecked, show message
           !isShowAll && wishlist.length === 0 && <h1>No wishlisted items!</h1>
         }
         {
-          //If page is loading, render skeleton cards
+          // If page is loading, render skeleton cards
           loading && <SkeletonCards />
         }
       </div>
